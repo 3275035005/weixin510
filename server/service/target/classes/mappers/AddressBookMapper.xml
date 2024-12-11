@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.AddressBookMapper">
+    <!-- 查询用户所有地址信息 -->
+    <select id="selectAddressBookList" resultType="com.sky.entity.AddressBook">
+        SELECT *
+        FROM address_book
+        WHERE user_id = #{userId,jdbcType=BIGINT}
+    </select>
+
+    <!-- 添加用户地址簿信息 -->
+    <insert id="insertAddressBook">
+        INSERT INTO address_book
+        VALUES (NULL, #{addressBook.userId,jdbcType=BIGINT},
+                #{addressBook.consignee,jdbcType=VARCHAR}, #{addressBook.sex,jdbcType=VARCHAR},
+                #{addressBook.phone,jdbcType=VARCHAR}, #{addressBook.provinceCode,jdbcType=VARCHAR},
+                #{addressBook.provinceName,jdbcType=VARCHAR}, #{addressBook.cityCode,jdbcType=VARCHAR},
+                #{addressBook.cityName,jdbcType=VARCHAR}, #{addressBook.districtCode,jdbcType=VARCHAR},
+                #{addressBook.districtName,jdbcType=VARCHAR}, #{addressBook.detail,jdbcType=VARCHAR},
+                #{addressBook.label,jdbcType=VARCHAR}, #{addressBook.isDefault,jdbcType=INTEGER})
+    </insert>
+
+    <!-- 将用户的所有地址簿的默认修改非默认 -->
+    <update id="updateAddressBookDefault0">
+        UPDATE address_book
+        SET is_default = 0
+        WHERE user_id = #{userId,jdbcType=BIGINT}
+    </update>
+
+    <!-- 更新用户地址簿信息 -->
+    <update id="update">
+        UPDATE address_book
+        <set>
+            <if test="addressBook.consignee != null and addressBook.consignee != ''">
+                consignee = #{addressBook.consignee,jdbcType=VARCHAR}
+            </if>
+            <if test="addressBook.sex != null and addressBook.sex != ''">
+                , sex = #{addressBook.sex,jdbcType=VARCHAR}
+            </if>
+            <if test="addressBook.phone != null and addressBook.phone != ''">
+                , phone = #{addressBook.phone,jdbcType=VARCHAR}
+            </if>
+            <if test="addressBook.provinceCode != null and addressBook.provinceCode != ''">
+                , province_code = #{addressBook.provinceCode,jdbcType=VARCHAR}
+            </if>
+            <if test="addressBook.provinceName != null and addressBook.provinceName != ''">
+                , province_name = #{addressBook.provinceName,jdbcType=VARCHAR}
+            </if>
+            <if test="addressBook.cityCode != null and addressBook.cityCode != ''">
+                , city_code = #{addressBook.cityCode,jdbcType=VARCHAR}
+            </if>
+            <if test="addressBook.cityName != null and addressBook.cityName != ''">
+                , city_name = #{addressBook.cityName,jdbcType=VARCHAR}
+            </if>
+            <if test="addressBook.districtCode != null and addressBook.districtCode != ''">
+                , district_code = #{addressBook.districtCode,jdbcType=VARCHAR}
+            </if>
+            <if test="addressBook.districtName != null and addressBook.districtName != ''">
+                , district_name = #{addressBook.districtName,jdbcType=VARCHAR}
+            </if>
+            <if test="addressBook.detail != null and addressBook.detail != ''">
+                , detail = #{addressBook.detail,jdbcType=VARCHAR}
+            </if>
+            <if test="addressBook.label != null and addressBook.label != ''">
+                , label = #{addressBook.label,jdbcType=VARCHAR}
+            </if>
+            <if test="addressBook.isDefault != null">
+                , is_default = #{addressBook.isDefault,jdbcType=INTEGER}
+            </if>
+        </set>
+        WHERE id = #{addressBook.id,jdbcType=BIGINT}
+    </update>
+
+    <!-- 查询指定Id的地址簿功能 -->
+    <select id="selectAddressBookById" resultType="com.sky.entity.AddressBook">
+        SELECT *
+        FROM address_book
+        WHERE id = #{addressBookId,jdbcType=BIGINT}
+    </select>
+
+    <!-- 根据Id删除地址簿功能 -->
+    <delete id="deleteAddressBook">
+        DELETE
+        FROM address_book
+        WHERE id = #{addressBookId,jdbcType=BIGINT}
+    </delete>
+
+    <!-- 查询用户默认地址功能 -->
+    <select id="selectDefaultAddressBook" resultType="com.sky.entity.AddressBook">
+        SELECT *
+        FROM address_book
+        WHERE user_id = #{userId,jdbcType=BIGINT}
+          AND is_default = 1;
+    </select>
+</mapper>

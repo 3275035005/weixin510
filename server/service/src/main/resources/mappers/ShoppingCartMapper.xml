@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.ShoppingCartMapper">
+    <!-- 添加购物车信息 -->
+    <insert id="insertShoppingCart">
+        INSERT INTO shopping_cart
+        VALUES (NULL, #{shoppingCart.name,jdbcType=VARCHAR}, #{shoppingCart.image,jdbcType=VARCHAR},
+                #{shoppingCart.userId,jdbcType=BIGINT}, #{shoppingCart.dishId,jdbcType=BIGINT},
+                #{shoppingCart.setmealId,jdbcType=BIGINT}, #{shoppingCart.dishFlavor,jdbcType=VARCHAR},
+                #{shoppingCart.number,jdbcType=INTEGER}, #{shoppingCart.amount,jdbcType=DECIMAL},
+                #{shoppingCart.createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <!-- 基于条件查询购物车数据 -->
+    <select id="selectShoppingCart" resultType="com.sky.entity.ShoppingCart">
+        SELECT *
+        FROM shopping_cart
+        <where>
+            <if test="conditionShoppingCart.userId != null">
+                user_id = #{conditionShoppingCart.userId,jdbcType=BIGINT}
+            </if>
+            <if test="conditionShoppingCart.dishId != null">
+                AND dish_id = #{conditionShoppingCart.dishId,jdbcType=BIGINT}
+            </if>
+            <if test="conditionShoppingCart.dishFlavor != null and conditionShoppingCart.dishFlavor != ''">
+                AND dish_flavor = #{conditionShoppingCart.dishFlavor,jdbcType=VARCHAR}
+            </if>
+            <if test="conditionShoppingCart.setmealId != null">
+                AND setmeal_id = #{conditionShoppingCart.setmealId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+    <!-- 更新购物车中的数量信息 -->
+    <update id="updateShoppingCartNumber">
+        UPDATE shopping_cart
+        SET number = #{existsShoppingCart.number,jdbcType=INTEGER}
+        WHERE id = #{existsShoppingCart.id,jdbcType=BIGINT}
+    </update>
+
+    <!-- 清空购物车 -->
+    <delete id="cleanShoppingCart">
+        DELETE
+        FROM shopping_cart
+        WHERE user_id = #{userId,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteShoppingCart">
+        delete from shopping_cart  <where>
+        <if test="shoppingCart.dishId != null">
+            and dish_id = #{shoppingCart.dishId}
+        </if>
+        <if test="shoppingCart.setmealId != null">
+            and setmeal_id = #{shoppingCart.setmealId}
+        </if>
+        <if test="shoppingCart.dishFlavor != null">
+            and dish_flavor = #{shoppingCart.dishFlavor}
+        </if>
+    </where>
+    </delete>
+</mapper>

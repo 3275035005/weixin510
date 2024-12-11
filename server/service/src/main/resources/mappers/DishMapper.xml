@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.DishMapper">
+    <!-- 基于分类Id查询食材数量 -->
+    <select id="selectDishCountByCategoryId" resultType="java.lang.Integer">
+        SELECT COUNT(id)
+        FROM dish
+        WHERE category_id = #{categoryId,jdbcType=BIGINT}
+    </select>
+
+    <!-- 添加食材数据 -->
+    <insert id="insertDish" useGeneratedKeys="true" keyProperty="dish.id">
+        INSERT INTO dish
+        VALUES (NULL, #{dish.name,jdbcType=VARCHAR}, #{dish.categoryId,jdbcType=BIGINT}, #{dish.price,jdbcType=DECIMAL},
+                #{dish.image,jdbcType=VARCHAR}, #{dish.description,jdbcType=VARCHAR}, #{dish.status,jdbcType=INTEGER},
+                #{dish.createTime,jdbcType=TIMESTAMP}, #{dish.updateTime,jdbcType=TIMESTAMP},
+                #{dish.createUser,jdbcType=BIGINT}, #{dish.updateUser,jdbcType=BIGINT})
+    </insert>
+
+    <!-- 分页条件查询食材数据 -->
+    <select id="selectDishByPage" resultType="com.sky.vo.DishVO">
+        SELECT d.*, c.name AS categoryName
+        FROM dish d
+                 LEFT JOIN category c ON d.category_id = c.id
+        <where>
+            <if test="dishPageQueryDTO.name != null and dishPageQueryDTO.name != ''">
+                    d.name LIKE CONCAT('%', #{dishPageQueryDTO.name,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="dishPageQueryDTO.categoryId != null">
+                AND d.category_id = #{dishPageQueryDTO.categoryId,jdbcType=INTEGER}
+            </if>
+            <if test="dishPageQueryDTO.status != null">
+                AND d.status = #{dishPageQueryDTO.status,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+    <!-- 基于食材Id查询食材信息 -->
+    <select id="selectDishById" resultType="com.sky.entity.Dish">
+        SELECT *
+        FROM dish
+        WHERE id = #{dishId,jdbcType=BIGINT}
+    </select>
+
+    <!-- 批量删除食材数据 -->
+    <delete id="batchDeleteDish">
+        DELETE
+        FROM dish WHERE id IN
+        <foreach collection="ids" item="dishId" open="(" close=")" separator=",">
+            #{dishId,jdbcType=BIGINT}
+        </foreach>
+    </delete>
+
+    <!-- 更新食材基本信息 -->
+    <update id="updateDish">
+        UPDATE dish
+        <set>
+            <if test="dish.name != null and dish.name != ''">
+                name = #{dish.name,jdbcType=VARCHAR}
+            </if>
+            <if test="dish.categoryId != null">
+                , category_id = #{dish.categoryId,jdbcType=BIGINT}
+            </if>
+            <if test="dish.price != null">
+                , price = #{dish.price,jdbcType=DECIMAL}
+            </if>
+            <if test="dish.image != null and dish.image != ''">
+                , image = #{dish.image,jdbcType=VARCHAR}
+            </if>
+            <if test="dish.description != null and dish.description != ''">
+                , description = #{dish.description,jdbcType=VARCHAR}
+            </if>
+            <if test="dish.status != null">
+                , status = #{dish.status,jdbcType=INTEGER}
+            </if>
+            <if test="dish.updateTime != null">
+                , update_time = #{dish.updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="dish.updateUser != null">
+                , update_user = #{dish.updateUser,jdbcType=BIGINT}
+            </if>
+        </set>
+        WHERE id = #{dish.id,jdbcType=BIGINT}
+    </update>
+
+    <!-- 基于分类Id查询食材信息 -->
+    <select id="selectDishByCategoryId" resultType="com.sky.entity.Dish">
+        SELECT * FROM dish WHERE category_id = #{categoryId,jdbcType=BIGINT}
+    </select>
+
+    <!-- 基于分类Id查询启售食材信息 -->
+    <select id="selectStatus1DishByCategoryId" resultType="com.sky.entity.Dish">
+        SELECT * FROM dish WHERE category_id = #{categoryId,jdbcType=BIGINT} AND status = 1
+    </select>
+
+    <!-- 基于食材状态查询食材数量 -->
+    <select id="selectDishCountByStatus" resultType="java.lang.Integer">
+        SELECT COUNT(id) FROM dish
+        <where>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <select id="selectDishByName" resultType="com.sky.entity.Dish">
+        SELECT * FROM dish WHERE
+                name LIKE CONCAT('%', #{name,jdbcType=VARCHAR}, '%')
+                               AND status = 1
+    </select>
+</mapper>

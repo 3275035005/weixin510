@@ -1,0 +1,42 @@
+{
+  "groups": [
+    {
+      "name": "sky.jwt",
+      "type": "com.sky.properties.JwtProperties",
+      "sourceType": "com.sky.properties.JwtProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "sky.jwt.admin-secret-key",
+      "type": "java.lang.String",
+      "sourceType": "com.sky.properties.JwtProperties"
+    },
+    {
+      "name": "sky.jwt.admin-token-name",
+      "type": "java.lang.String",
+      "sourceType": "com.sky.properties.JwtProperties"
+    },
+    {
+      "name": "sky.jwt.admin-ttl",
+      "type": "java.lang.Long",
+      "sourceType": "com.sky.properties.JwtProperties"
+    },
+    {
+      "name": "sky.jwt.user-secret-key",
+      "type": "java.lang.String",
+      "sourceType": "com.sky.properties.JwtProperties"
+    },
+    {
+      "name": "sky.jwt.user-token-name",
+      "type": "java.lang.String",
+      "sourceType": "com.sky.properties.JwtProperties"
+    },
+    {
+      "name": "sky.jwt.user-ttl",
+      "type": "java.lang.Long",
+      "sourceType": "com.sky.properties.JwtProperties"
+    }
+  ],
+  "hints": []
+}

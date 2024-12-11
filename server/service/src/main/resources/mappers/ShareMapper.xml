@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.ShareMapper">
+
+    <!-- 添加美食社区 -->
+    <insert id="insertShare">
+        INSERT INTO share
+        VALUES (NULL,
+                #{share.setmealName,jdbcType=VARCHAR},
+                #{share.dishName,jdbcType=VARCHAR},
+                 #{share.employeeId,jdbcType=BIGINT},
+                #{share.working,jdbcType=VARCHAR},
+                #{share.content,jdbcType=VARCHAR},
+                #{share.image,jdbcType=VARCHAR},
+                #{share.video,jdbcType=VARCHAR},
+                #{share.status,jdbcType=VARCHAR},
+                #{share.createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <!-- 分页查询美食社区功能 -->
+    <select id="selectByPage" resultType="com.sky.entity.Share">
+        SELECT s.*, e.name AS employeeName
+        FROM share AS s
+        left join employee AS e on s.employee_id = e.id
+        <where>
+            <if test="sharePageQueryDTO.setmealName != null and sharePageQueryDTO.setmealName != ''">
+                s.setmeal_name LIKE CONCAT('%', #{sharePageQueryDTO.setmealName,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="sharePageQueryDTO.status != null and sharePageQueryDTO.status != ''">
+                AND s.status = #{sharePageQueryDTO.status,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY s.create_time DESC
+    </select>
+
+    <update id="updateShareStatus">
+        UPDATE share
+        SET status = #{status}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="update">
+        UPDATE share
+        <set>
+            <if test="share.setmealName != null and share.setmealName != ''">
+                , setmeal_name = #{share.setmealName,jdbcType=VARCHAR}
+            </if>
+            <if test="share.dishName != null and share.dishName != ''">
+                , dish_name = #{share.dishName,jdbcType=VARCHAR}
+            </if>
+            <if test="share.employeeId != null and share.employeeId != ''">
+                , employee_id = #{share.employeeId,jdbcType=BIGINT}
+            </if>
+            <if test="share.working != null and share.working != ''">
+                , working = #{share.working,jdbcType=VARCHAR}
+            </if>
+            <if test="share.content != null and share.content != ''">
+                , content = #{share.content,jdbcType=VARCHAR}
+            </if>
+            <if test="share.image != null and share.image != ''">
+                , image = #{share.image,jdbcType=VARCHAR}
+            </if>
+            <if test="share.video != null and share.video != ''">
+                , video = #{share.video,jdbcType=VARCHAR}
+            </if>
+            <if test="share.status != null and share.status != ''">
+                , status = #{share.status,jdbcType=CHAR}
+            </if>
+        </set>
+        WHERE id = #{share.id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectShareById" resultType="com.sky.entity.Share">
+        SELECT s.*, e.name AS employeeName
+        FROM share AS s
+                 left join employee AS e on s.employee_id = e.id
+        WHERE s.id = #{shareId,jdbcType=BIGINT}
+    </select>
+    <select id="selectList" resultType="com.sky.entity.Share">
+        SELECT s.*, e.name AS employeeName
+        FROM share AS s
+        left join employee AS e on s.employee_id = e.id
+        <where>
+            <if test="share.setmealName != null and share.setmealName != ''">
+                s.setmeal_name LIKE CONCAT('%', #{share.setmealName,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="share.status != null and share.status != ''">
+                AND s.status = #{share.status,jdbcType=VARCHAR}
+            </if>
+            <if test="share.employeeId != null">
+                AND s.employee_id = #{share.employeeId,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY s.create_time DESC
+    </select>
+
+    <delete id="deleteShareById">
+        DELETE
+        FROM share
+        WHERE id = #{shareId,jdbcType=BIGINT}
+    </delete>
+
+</mapper>

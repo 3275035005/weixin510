@@ -1,0 +1,127 @@
+page{ background-size: 100%; min-height: 430rpx; padding-bottom: 10rpx;}
+
+
+/* 条形码 */
+.stock_barcode{background: #fff; border-radius: 25rpx; margin: 25rpx; text-align: center;}
+.stock_barcode .title{height: 90rpx; line-height: 90rpx; color: #212121; font-size: 25rpx;}
+.stock_barcode .code1{height: 90rpx; line-height: 60rpx; color: #6658fa; font-size: 42rpx;}
+/* .stock_barcode .code{margin-bottom: rpx;} */
+
+
+/* 基本信息 */
+.stock_info{background: #fff; border-radius: 25rpx; margin: 0 25rpx; margin-bottom: 16rpx; margin-top: 8rpx;}
+.stock_info .list{padding-left: 32rpx;}
+.stock_info .item{border-bottom: 1px solid #efefef; display: flex; min-height: 100rpx; line-height: 100rpx;}
+.stock_info .item_icon{width: 36rpx; height: 36rpx; margin-right: 20rpx; height: 100rpx;}
+.stock_info .item_title{font-size: 28rpx;width: 20%; color: #212121;}
+.stock_info .item_info{margin-left: auto; font-size: 28rpx; color: #999; width: 65%; text-align: right; padding-right: 25rpx;}
+.stock_info .item:last-child{border-bottom: none;}
+.stock_info .item_input{height: 100%; height: 100%; text-align: right; font-size: 28rpx; height: 100rpx; color: #212121;}
+.stock_info .item_textarea{width: 100%; color: #212121; font-size: 28rpx; box-sizing: border-box; padding-right: 0; padding-top: 25rpx;}
+.stock_info .item_change{height: 100%; justify-content: flex-end;}
+.stock_info .item_change .cell{border: 1rpx solid #dfdfdf; height: 56rpx; line-height: 56rpx; padding: 0 16rpx; border-radius: 8rpx; margin-left: 16rpx;}
+.stock_info .item_change .cell.active{border: 1rpx solid #7973FB; color: #7973FB;}
+/* 凭证 */
+.stock_voucher{ border-radius: 25rpx; margin: 0 25rpx; padding: 25rpx; padding-bottom: 8rpx;}
+.stock_voucher .tips{font-size: 28rpx; margin-bottom: 16rpx; color: #212121;}
+.stock_info .item_title text{color: #ff0000; margin-left: 5rpx;}
+.stock_voucher .show_video{
+	 display: inline-block;
+	  border: 1px solid #ececec;
+	  position: relative;
+}
+.stock_voucher .video{
+	 width: 200rpx;
+	   height: 200rpx
+}
+.stock_voucher .close-img{  background-color: white;
+  background-color: white;
+  font-color: #ececec;
+  font-size: 10px;
+  width: 50rpx;
+  height: 50rpx;
+  text-align: center;
+ 
+  border-radius: 100%;
+  transform: rotate(45deg);
+  cursor:pointer;
+  opacity: 0.5;
+  top:1px;
+  right:1px;
+  display: block;
+  position: absolute;
+  }
+	   
+/* 备注 */
+.stock_notes{ margin: 0 25rpx; padding: 25rpx;}
+.stock_notes textarea{ font-size: 28rpx;height: 100rpx;}
+
+/* tabs */
+.stock_tabs{justify-content: center; padding-top: 32rpx;}
+.stock_tabs__cell{background: #f5f5f5; margin: 0 12rpx; padding: 16rpx 28rpx; border-radius: 100rpx; font-size: 28rpx; color: #999;}
+.stock_tabs__cell.active{background: #7973FB; color: #fff;}
+
+
+/* all */
+.flex{display: flex; flex-wrap: wrap; align-items: center;}
+.placeholder{color: #ccc;}
+
+
+/* line */
+.line{position: relative;}
+.line::after{content: ""; background: #efefef; width: 1rpx; height: 64rpx; position: absolute; right: 0; top: calc(50% - 32rpx)}
+.line:last-child::after{background: none;}
+
+
+/* box */
+.page_box{background: #fff; border-radius: 25rpx; box-shadow: 0 4px 4px #F0F1F5;}
+
+
+/* column */
+.page_column {padding: 25rpx;}
+.page_column .line{width: 6rpx; height: 25rpx; background: #ffc200; border-radius: 100rpx; margin-right: 16rpx;}
+.page_column .title{font-size: 32rpx; font-weight:bolder;}
+.page_column .second{font-size: 26rpx;margin-left: auto;color: #ccc;}
+/* tab */
+.page_tab{justify-content: center;}
+.page_tab .cell{text-align: center; height: 64rpx; line-height: 64rpx; width: 160rpx; text-align: center; margin: 0 12rpx; font-size: 24rpx; background: #F9FAFC; border-radius: 100rpx; color: #212121;}
+.page_tab .cell.active{background: linear-gradient(to bottom, #7069FB, #ffc200); color: #fff;}
+
+
+/* category */
+.page_category{ height: 96rpx; background: #fff; border-top: 1rpx solid #efefef;} 
+.page_category .item{width: 25%; text-align: center; position: relative; height: 100%; display: flex; align-items: center; justify-content: center; color: #212121; font-size: 28rpx;}
+.page_category .item::after{opacity: 0; content: ""; left: calc(50% - 26rpx); bottom: 0; height: 4rpx; background: #ffc200; position: absolute; width: 52rpx;}
+.page_category .item.active{color: #ffc200; font-weight: bolder; font-size: 32rpx;}
+.page_category .item.active::after{opacity: 1;}
+	
+
+/* data */
+.page_data .head{margin: 0 25rpx; background: #F9FAFC; height: 80rpx; line-height: 80rpx; border-radius: 16rpx;  text-align: center; font-size: 28rpx; color: #999;}
+.page_data .data{margin: 0 25rpx; text-align: center; font-size: 28rpx; height: 80rpx; border-bottom: 1rpx solid #efefef;}
+.page_data .list .cell:nth-child(1){width: 20%;}
+.page_data .list .cell:nth-child(2){width: 30%;}
+.page_data .list .cell:nth-child(3){width: 30%;}
+.page_data .list .cell:nth-child(4){width: 20%;}
+
+
+/* button */
+.page_button{background: linear-gradient(to bottom, #ffc200, #ffc200); color: #fff; text-align: center; height: 100rpx; border-radius: 100rpx; line-height: 100rpx; font-size: 32rpx;}
+.page_button.mini{ width: 400rpx; margin: 64rpx auto;}
+
+
+/* panel */
+.page_panel{margin: 0 25rpx; padding-left: 32rpx; margin-bottom: 25rpx;}
+.page_panel .item{display: flex; align-items: center; height: 100rpx; border-bottom: 1px solid #efefef;}
+.page_panel .item_icon{width: 32rpx; height: 32rpx; margin-right: 20rpx;}
+.page_panel .item_title{font-size: 30rpx; width: 80%;}
+.page_panel .item_arrow{width: 28rpx; height: 28rpx; margin-left: auto; margin-right: 20rpx;}
+.page_panel .item:last-child{border-bottom: none;}
+
+
+/* pop */
+.page_pop{position: fixed; left: 0; top: 0; width: 100%; height: 100%; background-color:rgba(0,0,0,0.5); z-index: 999; display: flex; align-items: flex-end;}
+.page_pop .pop_box{background: #fff; width: 100%; border-radius: 16rpx 16rpx 0 0;}
+.page_pop .pop_column{text-align: center; font-size: 36rpx; position: relative; height: 100rpx; justify-content: center; font-weight: bolder;}
+.page_pop .pop_column .close{position: absolute; right: 32rpx; top: 32rpx; width: 40rpx; height: 40rpx;}
+.page_pop .pop_content{padding: 32rpx; height: 800rpx; overflow-y: auto; font-size: 28rpx; padding-top: 0; line-height: 180%;}

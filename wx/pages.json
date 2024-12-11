@@ -1,0 +1,230 @@
+{
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	},
+  "pages": [
+	
+	  {
+	    "path": "pages/index/index",
+	    "style": {
+	      "navigationStyle": "custom",
+	      "navigationBarTitleText": "食材"
+	    }
+	  },
+	  {
+	    "path": "pages/caipu/index",
+	    "style": {
+	      "navigationBarTitleText": "菜谱",
+	      "enablePullDownRefresh": false,
+	      "navigationBarBackgroundColor": "#ffc200"
+	    }
+	  },
+	{
+	  "path": "pages/login/index",
+	  "style": {
+	    "navigationBarTitleText": "登录",
+			  "navigationBarBackgroundColor": "#ffc200",
+	    "enablePullDownRefresh": false
+	  }
+	},
+	
+	 {
+	   "path": "pages/index/search",
+	   "style": {
+	 		 "enablePullDownRefresh": false,
+	       "navigationBarBackgroundColor": "#ffc200",
+	     "navigationBarTitleText": "我的搜索"
+	   }
+	 },
+	 
+	  {
+	    "path": "pages/share/index",
+	    "style": {
+	  		 "enablePullDownRefresh": false,
+	        "navigationBarBackgroundColor": "#ffc200",
+	      "navigationBarTitleText": "美食社区"
+	    }
+	  },
+	  {
+	    "path": "pages/setmealdish_info/index",
+	    "style": {
+		 "enablePullDownRefresh": false,
+	        "navigationBarBackgroundColor": "#ffc200",
+	      "navigationBarTitleText": "菜谱详情"
+	    }
+	  },
+	  {
+	    "path": "pages/share_info/index",
+	    "style": {
+	  		 "enablePullDownRefresh": false,
+	        "navigationBarBackgroundColor": "#ffc200",
+	      "navigationBarTitleText": "美食详情"
+	    }
+	  },
+	 {
+	   "path": "pages/share_sub/index",
+	   "style": {
+	 		"enablePullDownRefresh": false,
+	       "navigationBarBackgroundColor": "#ffc200",
+	     "navigationBarTitleText": "分享美食"
+	   }
+	 },
+	 	 
+	  {
+	    "path": "pages/collector/index",
+	    "style": {
+	  		 "enablePullDownRefresh": false,
+	        "navigationBarBackgroundColor": "#ffc200",
+	      "navigationBarTitleText": "我的收藏"
+	    }
+	  },
+	  {
+	    "path": "pages/info/index",
+	    "style": {
+	  		 "enablePullDownRefresh": false,
+	        "navigationBarBackgroundColor": "#ffc200",
+	      "navigationBarTitleText": "个人资料"
+	    }
+	  },
+	
+	  {
+	    "path": "pages/register/index",
+	    "style": {
+	      "navigationBarTitleText": "注册",
+	      "enablePullDownRefresh": false,
+	      "navigationBarBackgroundColor": "#ffc200"
+	    }
+	  },
+	  
+    {
+      "path": "pages/order/index",
+      "style": {
+				"navigationStyle": "custom",
+        "navigationBarTitleText": "提交订单",
+        "enablePullDownRefresh": false,
+        "navigationBarBackgroundColor": "#ffc200"
+
+      }
+    },
+	{
+	  "path": "pages/details/index",
+	  "style": {
+			"navigationStyle": "custom",
+	    "navigationBarTitleText": "订单详情",
+	    "enablePullDownRefresh": false,
+	    "navigationBarBackgroundColor": "#ffc200"
+	
+	  }
+	},
+	{
+	  "path": "pages/pay/index",
+	  "style": {
+	    "navigationBarTitleText": "支付订单",
+	    "enablePullDownRefresh": false,
+	    "navigationBarBackgroundColor": "#ffc200"
+	  }
+	},
+    {
+      "path": "pages/success/index",
+      "style": {
+        "navigationBarTitleText": "提交成功",
+        "enablePullDownRefresh": false,
+        "navigationBarBackgroundColor": "#ffc200"
+      }
+    },
+    {
+      "path": "pages/nonet/index",
+      "style": {
+        "navigationBarTitleText": "无网络"
+      }
+    }, {
+      "path": "pages/address/address",
+      "style": {
+        "navigationBarTitleText": "地址管理",
+        "enablePullDownRefresh": false,
+        "navigationBarBackgroundColor": "#ffc200"
+      }
+    },{
+      "path": "pages/remark/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "订单备注",
+        "enablePullDownRefresh": false,
+        "navigationBarBackgroundColor": "#ffc200"
+      }
+    },
+    {
+      "path": "pages/my/my",
+      "style": {
+        "navigationBarTitleText": "个人中心",
+        "enablePullDownRefresh": false,
+        "navigationBarBackgroundColor": "#ffc200"
+        // "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/addOrEditAddress/addOrEditAddress",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "新增收获地址",
+        "enablePullDownRefresh": false,
+        "navigationBarBackgroundColor": "#ffc200"
+      }
+
+    },
+    {
+      "path": "pages/historyOrder/historyOrder",
+      "style": {
+        "navigationBarTitleText": "历史订单",
+        "enablePullDownRefresh": false,
+        "navigationBarBackgroundColor": "#ffc200"
+
+      }
+    }
+    ],
+  "globalStyle": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "菜谱",
+    "navigationBarBackgroundColor": "#ffc200",
+    // "navigationBarBackground": "#E95F3C",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar":{
+          "height":"56px",
+          "backgroundColor":"white",
+          "borderStyle":"white",
+          "selectedColor":"#717171",
+          "fontSize":"12px",
+          "spacing":"0",
+          "list":[
+			  {
+			      "pagePath":"pages/caipu/index",
+			      "iconPath":"static/cp1.png",
+			      "selectedIconPath":"static/cp2.png",
+			      "text":"菜谱"
+			  },
+            {
+              "pagePath":"pages/index/index",
+              "iconPath":"static/sc2.png",
+              "selectedIconPath":"static/sc1.png",
+              "text":"食材"
+          },
+		  
+		  {
+              "pagePath":"pages/my/my",
+              "iconPath":"static/wd1.png",
+              "selectedIconPath":"static/wd2.png",
+              "text":"我的"
+          }
+          
+      ]
+  },
+  "condition": { // 模式配置，仅开发期间生效
+    "current": 0, // 当前激活的模式(list 的索引项)
+    "list": [{
+      "name": "历史订单", // 模式名称
+      "path": "pages/historyOrder/historyOrder", // 启动页面，必选
+      "query": "" // 启动参数，在页面的onLoad函数里面得到
+    }]
+  }
+}

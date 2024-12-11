@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@dcloudio/uni-ui": "^1.4.14",
+    "uview-ui": "^2.0.36"
+  },
+  "devDependencies": {
+    "sass-loader": "^14.1.1"
+  }
+}

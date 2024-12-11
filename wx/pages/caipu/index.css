@@ -1,0 +1,27 @@
+page{background:#fff;}
+.flex{display: flex; align-items: center; flex-wrap: wrap;}
+
+/* tab */
+.page_tab{height: 88rpx; background: #fff; border-top: 1rpx solid #efefef; position: relative; z-index: 99;} 
+.page_tab .item{font-size: 28rpx; border-right: 1rpx solid #efefef; box-sizing: border-box; height: 100%; display: flex; align-items: center; justify-content: center; position: relative;}
+.page_tab .item:last-child{border-right: none;}
+.page_tab .item.active{color: #ffc200;}
+.page_tab .item.active::after{content: ""; left: 35%; width: 30%; background: #ffc200; height: 4rpx; position: absolute; bottom: 0; border-radius: 100rpx;}
+.page_tab.five .item{width: 20%; text-align: center;}
+.page_tab.two .item{width: 50%; text-align: center;}
+ 
+.page_tab{position: sticky; left: 0; top: 0; width: 100%; z-index: 99; background: #fff;}
+/* product */
+.page_product {margin: 0 28rpx; margin-top: 10rpx; justify-content: space-between;}
+.page_product .item{width: 49%; margin-bottom: 25rpx;}
+.page_product .item_pic{width: 332rpx; height: 332rpx; border-radius: 12rpx; margin-bottom: 12rpx;}
+.page_product .item_title{font-size: 26rpx; margin-bottom: -15rpx; height: 64rpx; line-height: 32rpx; overflow: hidden;}
+.page_product .item_trick{border: 1rpx solid #EDC9BA; border-radius: 100rpx; background: #FEF5F2; font-size: 25rpx; color: #F04D32; padding: 4rpx 16rpx; margin-bottom: 8rpx;}
+.page_product .item_trick text{margin-right: 8rpx;}
+.page_product .item_cell{font-size: 25rpx; justify-content: space-between; color: #999;}
+.page_product .item_price{font-size: 26rpx; color: #F04D32;}
+.page_product .item_old{color: #999; font-size: 25rpx; margin-top: 8rpx;}
+
+
+/* --- product --- */
+.product{margin: 28rpx; justify-content: space-between; }

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.OrdersMapper">
+    <!-- 添加订单基本信息(查询主键) -->
+    <insert id="insertOrder" useGeneratedKeys="true" keyProperty="orders.id">
+        INSERT INTO orders
+        VALUES (NULL, #{orders.number,jdbcType=VARCHAR}, #{orders.status,jdbcType=INTEGER},
+                #{orders.userId,jdbcType=BIGINT}, #{orders.addressBookId,jdbcType=BIGINT},
+                #{orders.orderTime,jdbcType=TIMESTAMP}, #{orders.checkoutTime,jdbcType=TIMESTAMP},
+                #{orders.payMethod,jdbcType=INTEGER}, #{orders.payStatus,jdbcType=INTEGER},
+                #{orders.amount,jdbcType=DECIMAL}, #{orders.remark,jdbcType=VARCHAR},
+                #{orders.phone,jdbcType=VARCHAR}, #{orders.address,jdbcType=VARCHAR},
+                #{orders.userName,jdbcType=VARCHAR}, #{orders.consignee,jdbcType=VARCHAR},
+                #{orders.cancelReason,jdbcType=VARCHAR}, #{orders.rejectionReason,jdbcType=VARCHAR},
+                #{orders.cancelTime,jdbcType=TIMESTAMP},
+                #{orders.deliveryTime,jdbcType=TIMESTAMP},
+                #{orders.packAmount}, #{orders.feedback,jdbcType=VARCHAR})
+    </insert>
+
+    <!-- 根据当前用户Id与订单编号查询原始订单信息 -->
+    <select id="selectOrderByOrderNumberAndUserId" resultType="com.sky.entity.Orders">
+        SELECT *
+        FROM orders
+        WHERE user_id = #{userId,jdbcType=BIGINT}
+          AND number = #{orderNumber,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 更新订单信息 -->
+    <update id="updateOrder">
+        UPDATE orders
+        <set>
+            <if test="orders.number != null and orders.number != ''">
+                number = #{orders.number,jdbcType=VARCHAR}
+            </if>
+            <if test="orders.status != null">
+                , status = #{orders.status,jdbcType=INTEGER}
+            </if>
+            <if test="orders.userId != null">
+                , user_id = #{orders.userId,jdbcType=BIGINT}
+            </if>
+            <if test="orders.addressBookId != null">
+                , address_book_id = #{orders.addressBookId,jdbcType=BIGINT}
+            </if>
+            <if test="orders.orderTime != null">
+                , order_time = #{orders.orderTime}
+            </if>
+            <if test="orders.checkoutTime != null">
+                , checkout_time = #{orders.checkoutTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="orders.payMethod != null">
+                , pay_method = #{orders.payMethod,jdbcType=INTEGER}
+            </if>
+            <if test="orders.payStatus != null">
+                , pay_status = #{orders.payStatus,jdbcType=INTEGER}
+            </if>
+            <if test="orders.amount != null">
+                , amount = #{orders.amount,jdbcType=DECIMAL}
+            </if>
+            <if test="orders.remark != null and orders.remark != ''">
+                , remark = #{orders.remark,jdbcType=VARCHAR}
+            </if>
+            <if test="orders.phone != null and orders.phone != ''">
+                , phone = #{orders.phone,jdbcType=VARCHAR}
+            </if>
+            <if test="orders.address != null and orders.address != ''">
+                , address = #{orders.address,jdbcType=VARCHAR}
+            </if>
+            <if test="orders.userName != null and orders.userName != ''">
+                , user_name = #{orders.userName,jdbcType=VARCHAR}
+            </if>
+            <if test="orders.consignee != null and orders.consignee != ''">
+                , consignee = #{orders.consignee,jdbcType=VARCHAR}
+            </if>
+            <if test="orders.cancelReason != null and orders.cancelReason != ''">
+                , cancel_reason = #{orders.cancelReason,jdbcType=VARCHAR}
+            </if>
+            <if test="orders.rejectionReason != null and orders.rejectionReason != ''">
+                , rejection_reason = #{orders.rejectionReason,jdbcType=VARCHAR}
+            </if>
+            <if test="orders.cancelTime != null">
+                , cancel_time = #{orders.cancelTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="orders.deliveryTime != null">
+                , delivery_time = #{orders.deliveryTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="orders.packAmount != null">
+                , pack_amount = #{orders.packAmount,jdbcType=INTEGER}
+            </if>
+
+            <if test="orders.feedback != null">
+                , feedback = #{orders.feedback,jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE id = #{orders.id,jdbcType=BIGINT}
+    </update>
+
+    <!-- 基于条件查询订单基本信息 -->
+    <select id="selectOrderByCondition" resultType="com.sky.entity.Orders">
+        SELECT *
+        FROM orders
+        <where>
+            <if test="ordersPageQueryDTO.number != null and ordersPageQueryDTO.number != ''">
+                number = #{ordersPageQueryDTO.number,jdbcType=VARCHAR}
+            </if>
+            <if test="ordersPageQueryDTO.phone != null and ordersPageQueryDTO.phone != ''">
+                AND phone = #{ordersPageQueryDTO.phone,jdbcType=VARCHAR}
+            </if>
+            <if test="ordersPageQueryDTO.status != null">
+                AND status = #{ordersPageQueryDTO.status,jdbcType=INTEGER}
+            </if>
+            <if test="ordersPageQueryDTO.userId != null">
+                AND user_id = #{ordersPageQueryDTO.userId,jdbcType=BIGINT}
+            </if>
+            <if test="ordersPageQueryDTO.beginTime != null and ordersPageQueryDTO.endTime != null">
+                AND order_time BETWEEN #{ordersPageQueryDTO.beginTime,jdbcType=TIMESTAMP} AND #{ordersPageQueryDTO.endTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <!-- 通过订单Id查询订单基本信息 -->
+    <select id="selectOrderById" resultType="com.sky.entity.Orders">
+        SELECT *
+        FROM orders
+        WHERE id = #{orderId,jdbcType=BIGINT}
+    </select>
+
+    <!-- 统计不同状态订单数量 -->
+    <select id="selectOrderCount" resultType="java.util.Map">
+        SELECT COUNT(status) AS count, status
+        FROM orders
+        GROUP BY status
+    </select>
+
+    <!-- 基于订单状态和订单下单时间点查询订单信息 -->
+    <select id="selectOrderByStatusAndLtOrderTime" resultType="com.sky.entity.Orders">
+        <!-- &lt;避免直接只用<与XML本身的组成起冲突 -->
+        SELECT *
+        FROM orders
+        WHERE status = #{status,jdbcType=INTEGER}
+          AND order_time &lt; #{orderTime,jdbcType=TIMESTAMP}
+    </select>
+
+    <!-- 基于订单状态与时间区间查询当天的营业额综合 -->
+    <select id="selectSumAmountByStatusAndTime" resultType="java.lang.Double">
+        SELECT SUM(amount)
+        FROM orders
+        <where>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                AND order_time &gt;= #{startTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="endTime != null">
+                AND order_time &lt;= #{endTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <!-- 基于订单状态与时间区间查询当天的订单数量 -->
+    <select id="selectOrderCountByStatusAndTime" resultType="java.lang.Integer">
+        SELECT COUNT(id)
+        FROM orders
+        <where>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                AND order_time &gt;= #{startTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="endTime != null">
+                AND order_time &lt;= #{endTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <!-- 基于时间区间查询区间内有效订单售出的食材/菜谱的数量的前10名(数量倒序排列) -->
+    <select id="selectTop10ByTime" resultType="com.sky.dto.GoodsSalesDTO">
+        SELECT COUNT(od.name) AS number ,od.name AS name
+        FROM orders o,
+             order_detail od WHERE o.status = 5
+                               AND o.id = od.order_id
+        <if test="startTime != null">
+            AND o.order_time &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null">
+            AND o.order_time &lt;= #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        GROUP BY od.name
+        ORDER BY number DESC
+        LIMIT 10
+    </select>
+</mapper>

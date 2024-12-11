@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.CategoryMapper">
+    <!-- 添加分类信息 -->
+    <insert id="insertCategory" parameterType="category">
+        INSERT INTO category
+        VALUES (null, #{category.type,jdbcType=INTEGER}, #{category.name,jdbcType=VARCHAR},
+                #{category.sort,jdbcType=INTEGER}, #{category.status,jdbcType=INTEGER},
+                #{category.createTime,jdbcType=TIMESTAMP}, #{category.updateTime,jdbcType=TIMESTAMP},
+                #{category.createUser,jdbcType=BIGINT}, #{category.updateUser,jdbcType=BIGINT});
+    </insert>
+
+    <!-- 分页查询分类功能 -->
+    <select id="selectByPage" resultType="category">
+        SELECT *
+        FROM category
+        <where>
+            <if test="categoryPageQueryDTO.name != null and categoryPageQueryDTO.name != ''">
+                    name LIKE CONCAT('%', #{categoryPageQueryDTO.name,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="categoryPageQueryDTO.type != null">
+                AND type = #{categoryPageQueryDTO.type,jdbcType=INTEGER}
+            </if>
+        </where>
+        ORDER BY sort DESC
+    </select>
+
+    <!-- 基于分类Id删除分类 -->
+    <delete id="deleteCategoryById">
+        DELETE
+        FROM category
+        WHERE id = #{categoryId,jdbcType=BIGINT}
+    </delete>
+
+    <!-- 更新分类信息 -->
+    <update id="updateCategoryById">
+        UPDATE category
+        <set>
+            <if test="category.name != null and category.name != ''">
+                name = #{category.name,jdbcType=VARCHAR}
+            </if>
+            <if test="category.type != null">
+                , type = #{category.type,jdbcType=INTEGER}
+            </if>
+            <if test="category.sort != null">
+                , sort = #{category.sort,jdbcType=INTEGER}
+            </if>
+            <if test="category.status != null">
+                , status = #{category.status,jdbcType=INTEGER}
+            </if>
+            <if test="category.updateTime != null">
+                , update_time = #{category.updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="category.updateUser != null">
+                , update_user = #{category.updateUser,jdbcType=BIGINT}
+            </if>
+        </set>
+        WHERE id = #{category.id,jdbcType=BIGINT}
+    </update>
+
+    <!-- 查询对应类型的分类信息 -->
+    <select id="selectByType" resultType="category">
+        SELECT *
+        FROM category
+        WHERE status = 1
+        <if test="type != null">
+            AND type = #{type,jdbcType=INTEGER}
+        </if>
+        ORDER BY sort DESC
+    </select>
+
+    <!-- 基于分类Id查询分类名称 -->
+    <select id="selectCategoryNameById" resultType="java.lang.String">
+        SELECT name
+        FROM category
+        WHERE id = #{categoryId,jdbcType=BIGINT}
+    </select>
+</mapper>

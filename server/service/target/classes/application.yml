@@ -1,0 +1,41 @@
+server:
+  port: 8081 #项目启动端口号
+spring:
+  main:
+    allow-circular-references: true #解决Spring循环嵌套依赖问题
+  datasource:
+    druid: #基于Druid连接池声明数据库基本四项
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/my_menu?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: root
+      password: root
+  servlet:
+    multipart:
+      max-file-size: 1GB # 指定单文件最大上传大小
+      max-request-size: 1GB # 指定一次请求文件总上传大小
+  redis:
+    database: 0 # 默认选择0号桶
+    port: 6379 # 端口
+    host: 127.0.0.1 # Ip地址
+
+mybatis:
+  mapper-locations: classpath:mappers/*.xml #声明SQL映射文件路径
+  type-aliases-package: com.sky.entity #批量起别名(起别名:该包下的类在映射文件的resulType中可以直接声明类名,不需要编写全类名)
+  configuration:
+    map-underscore-to-camel-case: true #开启驼峰命名
+logging:
+  level:
+    com:
+      sky:
+        mapper: debug #持久层日志级别为DEBUG
+        service: info #服务层日志级别为INFO
+        controller: info #表现层日志级别为INFO
+sky:
+  jwt:
+    admin-secret-key: itcast # 声明JWT令牌(商家端)部分(3)生成密钥
+    admin-ttl: 7200000 # 声明JWT令牌(商家端)默认过期时间(2小时)
+    admin-token-name: token # 声明前台默认提交的请求头的令牌头名称
+    user-secret-key: itheima # 声明JWT令牌(客户端)部分(3)生成秘钥
+    user-ttl: 7200000 # 声明JWT令牌(客户端)默认过期时间(2小时)
+    user-token-name: authentication # 声明小程序端默认提交的请求头中的令牌头名称
+

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.OrderDetailMapper">
+    <!-- 批量添加订单详情 -->
+    <insert id="batchInsertOrderDetail">
+        INSERT INTO order_detail VALUES
+        <foreach collection="orderDetailList" item="orderDetail" separator=",">
+            (NULL, #{orderDetail.name,jdbcType=VARCHAR}, #{orderDetail.image,jdbcType=VARCHAR},
+             #{orderDetail.orderId,jdbcType=BIGINT}, #{orderDetail.dishId,jdbcType=BIGINT},
+             #{orderDetail.setmealId,jdbcType=BIGINT}, #{orderDetail.dishFlavor,jdbcType=VARCHAR},
+             #{orderDetail.number,jdbcType=INTEGER}, #{orderDetail.amount,jdbcType=DECIMAL})
+        </foreach>
+    </insert>
+
+    <!-- 基于订单Id查询订单详情 -->
+    <select id="selectOrderDetailByOrderId" resultType="com.sky.entity.OrderDetail">
+        SELECT * FROM order_detail WHERE order_id = #{orderId,jdbcType=BIGINT}
+    </select>
+</mapper>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.EmployeeMapper">
+    <!-- 基于员工姓名查询员工信息方法 -->
+    <select id="selectEmployeeByUsername" resultType="com.sky.entity.Employee">
+        SELECT *
+        FROM employee
+        WHERE username = #{username,jdbcType=VARCHAR}
+    </select>
+    <!-- 添加员工信息 -->
+    <insert id="insertEmployee">
+        INSERT INTO employee
+        VALUES (NULL, #{employee.name,jdbcType=VARCHAR}, #{employee.username,jdbcType=VARCHAR},
+                #{employee.password,jdbcType=VARCHAR}, #{employee.phone,jdbcType=VARCHAR},
+                #{employee.sex,jdbcType=VARCHAR}, #{employee.idNumber,jdbcType=VARCHAR},
+                #{employee.status,jdbcType=INTEGER}, #{employee.createTime,jdbcType=TIMESTAMP},
+                #{employee.updateTime,jdbcType=TIMESTAMP}, #{employee.createUser,jdbcType=BIGINT},
+                #{employee.updateUser,jdbcType=BIGINT}, #{employee.role,jdbcType=CHAR},
+                #{employee.pungencyType,jdbcType=CHAR}, #{employee.sweetType,jdbcType=CHAR},
+                #{employee.address,jdbcType=CHAR})
+    </insert>
+
+    <!-- 条件分页查询员工信息(动态) -->
+    <select id="selectEmployeeByPage" resultType="com.sky.entity.Employee">
+        SELECT *
+        FROM employee
+        <where>
+            <if test="employeePageQueryDTO.name != null and employeePageQueryDTO.name != ''">
+                    name LIKE CONCAT('%', #{employeePageQueryDTO.name,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="employeePageQueryDTO.role != null and employeePageQueryDTO.role != ''">
+                AND role = #{employeePageQueryDTO.role}
+            </if>
+        </where>
+    </select>
+
+    <!-- 更新员工信息 -->
+    <update id="updateEmployee">
+        UPDATE employee
+        <set>
+            <if test="employee.name != null and employee.name != ''">
+                name = #{employee.name,jdbcType=VARCHAR}
+            </if>
+            <if test="employee.username != null and employee.username != ''">
+                , username = #{employee.username,jdbcType=VARCHAR}
+            </if>
+            <if test="employee.password != null and employee.password != ''">
+                , password = #{employee.password,jdbcType=VARCHAR}
+            </if>
+            <if test="employee.phone != null and employee.phone != ''">
+                , phone = #{employee.phone,jdbcType=VARCHAR}
+            </if>
+            <if test="employee.sex != null and employee.sex != ''">
+                , sex = #{employee.sex,jdbcType=VARCHAR}
+            </if>
+            <if test="employee.idNumber != null and employee.idNumber != ''">
+                , id_number = #{employee.idNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="employee.status != null">
+                , status = #{employee.status,jdbcType=INTEGER}
+            </if>
+            <if test="employee.updateTime != null">
+                , update_time = #{employee.updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="employee.updateUser != null">
+                , update_user = #{employee.updateUser,jdbcType=BIGINT}
+            </if>
+            <if test="employee.pungencyType != null">
+                , pungency_type = #{employee.pungencyType,jdbcType=CHAR}
+            </if>
+            <if test="employee.sweetType != null">
+                , sweet_type = #{employee.sweetType,jdbcType=CHAR}
+            </if>
+            <if test="employee.address != null">
+                , address = #{employee.address,jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE id = #{employee.id,jdbcType=BIGINT}
+    </update>
+
+    <!-- 基于Id查询员工信息-->
+    <select id="selectEmployeeById" resultType="com.sky.entity.Employee">
+        SELECT * FROM employee WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <!-- 基于时间区间查询满足要求的用户数(新用户/总数) -->
+    <select id="selectCountByTime" resultType="java.lang.Integer">
+        SELECT COUNT(id)
+        FROM employee
+        <where>
+            <if test="startTime != null">
+                create_time &gt;= #{startTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="endTime != null">
+                AND create_time &lt;= #{endTime,jdbcType=TIMESTAMP}
+            </if>
+            and role = '3'
+        </where>
+    </select>
+</mapper>

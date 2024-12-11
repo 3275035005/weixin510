@@ -1,0 +1,37 @@
+page{background: #F7F8FC;}
+
+
+/* show */
+.video_show video{width: 100%;}
+
+
+/* box */
+.video_box{padding: 22rpx;}
+
+
+/* info */
+.video_info{padding: 0 32rpx; margin-bottom: 25rpx;}
+.video_info .info_title{font-size: 36rpx; font-weight: bolder; padding: 32rpx 0; padding-bottom: 16rpx;}
+.video_info .info_time{border-bottom: 1rpx solid #efefef; font-size: 26rpx; color: #999; padding-bottom: 25rpx; }
+.video_info .info_time .left{margin: 0;}
+.video_info .info_time .right{float: right;}
+.video_info .info_company {border-bottom: 1rpx solid #efefef; padding: 20rpx 0;}
+.video_info .info_company .company_icon{width: 70rpx; height: 70rpx; }
+.video_info .info_company .company_title{margin-left: 16rpx; font-size: 28rpx;}
+.video_info .info_company .company_share{margin-left: auto; background: #727CFE; color: #fff; border-radius: 100rpx; width: 168rpx; 
+height: 56rpx; text-align: center; line-height: 56rpx; font-size: 30rpx;}
+.video_info .info_bottom{padding-bottom: 30rpx;}
+.video_info .info_company .company_share button{background: none; color: #fff; width: 100%; height: 100%;}
+.video_info .info_company .company_share button::after{border: none;}
+
+/* recommend */
+.video_recommend .list{padding: 32rpx; padding-top: 25rpx; padding-bottom: 0;}
+.video_recommend .item{border-bottom: 1rpx solid #efefef; margin-bottom: 32rpx; padding-bottom: 32rpx;}
+.video_recommend .item_pic{position: relative; box-shadow: 0 6rpx 12rpx rgba(0,0,0,0.16); height: 160rpx; border-radius: 16rpx; overflow: hidden;}
+.video_recommend .item_play{position: absolute; left: 0; top: 0; width: 100%; height: 100%;  z-index: 99; display: flex; align-items: center; justify-content: center;}
+.video_recommend .item_play .icon{width: 80rpx; height: 80rpx;}
+.video_recommend .item_image{width: 240rpx; height: 160rpx; border-radius: 12rpx;}
+.video_recommend .item_box{width: calc(100% - 265rpx); margin-left: auto;}
+.video_recommend .item_title{font-size: 30rpx; font-weight: bolder; margin-bottom: 16rpx;}
+.video_recommend .item_info{font-size: 25rpx; color: #999; justify-content: space-between;}
+.video_recommend .item:last-child{margin-bottom: 0; border-bottom: none;}

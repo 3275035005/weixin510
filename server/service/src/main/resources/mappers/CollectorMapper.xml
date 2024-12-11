@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.CollectorMapper">
+
+    <insert id="insertCollector" parameterType="com.sky.entity.Collector" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO collector
+        VALUES (null, #{collector.employeeId,jdbcType=VARCHAR},
+        #{collector.setmealId,jdbcType=VARCHAR},#{collector.createTime,jdbcType=TIMESTAMP});
+    </insert>
+
+    <select id="selectCollectorById" resultType="Long">
+        SELECT id
+        FROM collector
+        WHERE setmeal_id = #{setmealId,jdbcType=BIGINT} and employee_id = #{employeeId,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteCollectorById">
+        DELETE
+        FROM collector
+        WHERE id = #{collectorId,jdbcType=BIGINT}
+    </delete>
+
+    <select id="selectCollectorListByEmployeeId" resultType="com.sky.vo.SetmealVO">
+        SELECT
+        ss.*, ccc.name AS categoryName
+        FROM collector AS cc
+        left join setmeal AS ss on cc.setmeal_id = ss.id
+          LEFT JOIN category ccc ON ss.category_id = ccc.id
+
+        where cc.employee_id = #{employeeId}
+    </select>
+</mapper>

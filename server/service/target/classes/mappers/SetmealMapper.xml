@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.SetmealMapper">
+    <!-- 基于分类Id查询菜谱数量 -->
+    <select id="selectSetmealCountByCategoryId" resultType="java.lang.Integer">
+        SELECT COUNT(id)
+        FROM setmeal
+        WHERE category_id = #{categoryId,jdbcType=BIGINT}
+    </select>
+
+    <!-- 基于食材Id查询菜谱数量 -->
+    <select id="selectSetmealCountByDishId" resultType="java.lang.Integer">
+        SELECT COUNT(id)
+        FROM setmeal_dish
+        WHERE dish_id = #{dishId,jdbcType=BIGINT}
+    </select>
+
+    <!-- 分页查询菜谱信息 -->
+    <select id="selectByPage" resultType="com.sky.vo.SetmealVO">
+        SELECT s.*, c.name AS categoryName
+        FROM setmeal s
+                 LEFT JOIN category c ON s.category_id = c.id
+        <where>
+            <if test="setmealPageQueryDTO.name != null and setmealPageQueryDTO.name != ''">
+                AND s.name LIKE CONCAT('%', #{setmealPageQueryDTO.name,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="setmealPageQueryDTO.categoryId != null">
+                AND s.category_id = #{setmealPageQueryDTO.categoryId,jdbcType=INTEGER}
+            </if>
+            <if test="setmealPageQueryDTO.status != null">
+                AND s.status = #{setmealPageQueryDTO.status,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <!-- 添加菜谱基本信息 -->
+    <insert id="insertSetmeal" useGeneratedKeys="true" keyProperty="setmeal.id">
+        INSERT INTO setmeal
+        VALUES (null, #{setmeal.categoryId,jdbcType=BIGINT}, #{setmeal.name,jdbcType=VARCHAR},
+                #{setmeal.price,jdbcType=DECIMAL}, #{setmeal.status,jdbcType=INTEGER},
+                #{setmeal.description,jdbcType=VARCHAR},
+                #{setmeal.image,jdbcType=VARCHAR}, #{setmeal.createTime,jdbcType=TIMESTAMP},
+                #{setmeal.updateTime,jdbcType=TIMESTAMP},
+                #{setmeal.createUser,jdbcType=BIGINT}, #{setmeal.updateUser,jdbcType=BIGINT}
+                , #{setmeal.pungencyType,jdbcType=CHAR}, #{setmeal.sweetType,jdbcType=CHAR})
+    </insert>
+
+
+    <!-- 基于菜谱Id查询菜谱状态 -->
+    <select id="selectStatusById" resultType="java.lang.Integer">
+        SELECT status
+        FROM setmeal
+        WHERE id = #{setmealId,jdbcType=BIGINT};
+    </select>
+
+    <!-- 基于菜谱Id删除菜谱基本信息 -->
+    <delete id="deleteById">
+        DELETE
+        FROM setmeal
+        WHERE id = #{deleteSetmealId,jdbcType=BIGINT}
+    </delete>
+
+    <!-- 基于菜谱Id删除菜谱信息表中的关联信息 -->
+    <delete id="deleteSetmealDishBySetmealId">
+        DELETE
+        FROM setmeal_dish
+        WHERE setmeal_id = #{deleteSetmealId,jdbcType=BIGINT}
+    </delete>
+
+    <!-- 基于菜谱Id查询菜谱基本信息 -->
+    <select id="selectById" resultType="com.sky.entity.Setmeal">
+        SELECT *
+        FROM setmeal
+        WHERE id = #{setmealId,jdbcType=BIGINT}
+    </select>
+
+    <!-- 基于菜谱Id查询菜谱食材表关联信息 -->
+    <select id="selectSetmealDishBySetmealId" resultType="com.sky.entity.SetmealDish">
+        SELECT *
+        FROM setmeal_dish
+        WHERE setmeal_id = #{setmealId,jdbcType=BIGINT}
+    </select>
+
+    <!-- 基于菜谱Id更新菜谱信息 -->
+    <update id="updateSetmeal">
+        UPDATE setmeal
+        <set>
+            <if test="setmeal.categoryId != null">
+                category_id = #{setmeal.categoryId,jdbcType=BIGINT}
+            </if>
+            <if test="setmeal.name != null and setmeal.name != ''">
+                , name = #{setmeal.name,jdbcType=VARCHAR}
+            </if>
+            <if test="setmeal.price != null">
+                , price = #{setmeal.price,jdbcType=DECIMAL}
+            </if>
+            <if test="setmeal.status != null">
+                , status = #{setmeal.status,jdbcType=INTEGER}
+            </if>
+            <if test="setmeal.description != null and setmeal.description != ''">
+                , description = #{setmeal.description,jdbcType=VARCHAR}
+            </if>
+            <if test="setmeal.image != null and setmeal.image != ''">
+                , image = #{setmeal.image,jdbcType=VARCHAR}
+            </if>
+            <if test="setmeal.updateTime != null">
+                , update_time = #{setmeal.updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="setmeal.updateUser != null">
+                , update_user = #{setmeal.updateUser,jdbcType=BIGINT}
+            </if>
+            <if test="setmeal.pungencyType != null">
+                , pungency_type = #{setmeal.pungencyType,jdbcType=CHAR}
+            </if>
+            <if test="setmeal.sweetType != null">
+                , sweet_type = #{setmeal.sweetType,jdbcType=CHAR}
+            </if>
+        </set>
+        WHERE id = #{setmeal.id,jdbcType=BIGINT}
+    </update>
+
+    <!-- 根据分类Id查询菜谱列表信息功能 -->
+    <select id="selectByCondition" resultType="com.sky.entity.Setmeal">
+        SELECT *
+        FROM setmeal
+        <where>
+            <if test="conditionSetmeal.name != null and conditionSetmeal.name != ''">
+                name LIKE CONCAT('%', #{conditionSetmeal.name,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="conditionSetmeal.categoryId != null">
+                AND category_id = #{conditionSetmeal.categoryId,jdbcType=BIGINT}
+            </if>
+            <if test="conditionSetmeal.status != null">
+                AND status = #{conditionSetmeal.status,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+    <!-- 基于菜谱状态查询菜谱数量 -->
+    <select id="selectSetmealCOuntByStatus" resultType="java.lang.Integer">
+        SELECT COUNT(id) FROM setmeal
+        <where>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <select id="getListByNotId" resultType="com.sky.entity.Setmeal">
+        SELECT *
+        FROM setmeal
+        <if test="ids != null and ids.size() > 0">
+            where id not in
+            <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                #{id,jdbcType=BIGINT}
+            </foreach>
+        </if>
+
+    </select>
+</mapper>
